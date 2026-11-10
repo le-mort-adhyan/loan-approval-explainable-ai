@@ -18,7 +18,7 @@ Mini Project Assignment 10.11.26
 
 ---
 
-##  Dashboard at a glance
+## Dashboard at a glance
 
 |  Dataset |  Algorithms |  Best rejection recall |  Explainability |
 |:---:|:---:|:---:|:---:|

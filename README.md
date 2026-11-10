@@ -92,7 +92,7 @@ python src/predict.py        # interactive single-applicant prediction
 loan-approval-explainable-ai/
 ├── index.html          # project page (GitHub Pages)
 ├── README.md
-├── data/               # train.csv or download instructions
+├── data/               # train.csv or download instructions and all other csv files 
 ├── notebooks/loan_approval.ipynb
 ├── src/
 │   ├── preprocess.py

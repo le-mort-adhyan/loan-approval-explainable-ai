@@ -18,7 +18,7 @@ Mini Project Assignment 10.11.26
 
 ---
 
-## 📊 Dashboard at a glance
+##  Dashboard at a glance
 
 |  Dataset |  Algorithms |  Best rejection recall |  Explainability |
 |:---:|:---:|:---:|:---:|
@@ -65,7 +65,7 @@ flowchart LR
 
 > Accuracy alone is misleading here because about 69% of applications are approved. Recall on rejections is the key metric.
 
-## 🌳 Why was this applicant rejected?
+##  Why was this applicant rejected?
 
 Each decision follows a path through the tree. Example format (replace with your output):
 

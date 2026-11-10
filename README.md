@@ -122,6 +122,6 @@ loan-approval-explainable-ai/
 
 <div align="center">
 
-If this project helped you, consider starring the repo.
+If this project helped you, consider starring the repo. Please.
 
 </div>

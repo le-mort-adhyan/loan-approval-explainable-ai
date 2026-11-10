@@ -1,5 +1,8 @@
 # loan-approval-explainable-ai
 Mini Project Assignment 10.11.26
+# loan-approval-explainable-ai
+
+Mini Project Assignment 10.11.26
 
 <div align="center">
 
@@ -12,7 +15,7 @@ Mini Project Assignment 10.11.26
 ![No Deep Learning](https://img.shields.io/badge/deep%20learning-none-22C55E)
 ![Status](https://img.shields.io/badge/status-complete-38BDF8)
 
-[Project page](https://YOUR-USERNAME.github.io/loan-approval-explainable-ai/) · [📓 Notebook](notebooks/loan_approval.ipynb) · [📈 Results](results/) · [🚀 Quick start](#-quick-start)
+[Project page](https://YOUR-USERNAME.github.io/loan-approval-explainable-ai/) · [Notebook](notebooks/loan_approval.ipynb) · [Results](results/) · [Quick start](#quick-start)
 
 </div>
 
@@ -20,7 +23,7 @@ Mini Project Assignment 10.11.26
 
 ## Dashboard at a glance
 
-|  Dataset |  Algorithms |  Best rejection recall |  Explainability |
+| Dataset | Algorithms | Best rejection recall | Explainability |
 |:---:|:---:|:---:|:---:|
 | 614 applicants | 5 models + 3 feature-selection methods | `X.XX` | Tree rules + feature importance |
 
@@ -30,18 +33,18 @@ Mini Project Assignment 10.11.26
 
 ## Problem
 
-Banks must decide whether to approve a loan. Manual review is slow, and customers and regulators expect a reason for each decision. This project predicts loan approval, compares feature subsets and algorithms, and explains each outcome with interpretable rules. It is just a mini project not a proper system workflow for banking sector .
+Banks must decide whether to approve a loan. Manual review is slow, and customers and regulators expect a reason for each decision. This project predicts loan approval, compares feature subsets and algorithms, and explains each outcome with interpretable rules. It is a mini project, not a complete system workflow for the banking sector.
 
 ## Pipeline
 
 ```mermaid
 flowchart LR
-    A[Raw loan data] --> B [Preprocess]
-    B --> C [Feature engineering]
-    C --> D [Feature selection]
-    D --> E [Models + 5-fold CV]
-    E --> F [Tree rules & importance]
-    F --> G [predict.py]
+    A["Raw loan data"] --> B["Preprocess"]
+    B --> C["Feature engineering"]
+    C --> D["Feature selection"]
+    D --> E["Models + 5-fold CV"]
+    E --> F["Tree rules and importance"]
+    F --> G["predict.py"]
 ```
 
 ## Feature selection comparison
@@ -65,7 +68,7 @@ flowchart LR
 
 > Accuracy alone is misleading here because about 69% of applications are approved. Recall on rejections is the key metric.
 
-##  Why was this applicant rejected?
+## Why was this applicant rejected?
 
 Each decision follows a path through the tree. Example format (replace with your output):
 
@@ -75,7 +78,7 @@ Credit_History <= 0.5        → Rejected
 Reasons: no credit history; loan is large relative to income
 ```
 
-## ⚡ Quick start
+## Quick start
 
 ```bash
 git clone https://github.com/YOUR-USERNAME/loan-approval-explainable-ai.git
@@ -113,12 +116,12 @@ loan-approval-explainable-ai/
 
 ## Author
 
-**Shankhadip_Karmakar** · Roll no. `35530824067` · GKCIET, Malda , West Bengal · B.Tech CSE (AIML)
+**Shankhadip_Karmakar** · Roll no. `35530824067` · GKCIET, Malda, West Bengal · B.Tech CSE (AIML)
 
 ---
 
 <div align="center">
 
- "If this project helped you, consider starring the repo. Please ."
+If this project helped you, consider starring the repo.
 
 </div>

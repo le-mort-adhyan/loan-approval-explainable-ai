@@ -36,7 +36,7 @@ Banks must decide whether to approve a loan. Manual review is slow, and customer
 
 ```mermaid
 flowchart LR
-    A[Raw loan data] --> B[🧹 Preprocess]
+    A[Raw loan data] --> B [Preprocess]
     B --> C [Feature engineering]
     C --> D [Feature selection]
     D --> E [Models + 5-fold CV]

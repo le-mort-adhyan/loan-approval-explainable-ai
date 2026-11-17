@@ -6,7 +6,7 @@ Mini Project Assignment 10.11.26
 
 <img src="https://readme-typing-svg.demolab.com?font=Space+Grotesk&weight=600&size=30&pause=1200&color=38BDF8&center=true&vCenter=true&width=920&height=70&lines=EXPLAINABLE+LOAN+APPROVAL;Decision+Trees+%7C+Feature+Selection+%7C+Explainable+ML" alt="Explainable Loan Approval" />
 
-**A loan approval classifier that explains every decision**
+**A loan approval classifier**
 
 ![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)
 ![scikit-learn](https://img.shields.io/badge/scikit--learn-classical%20ML-F7931E?logo=scikitlearn&logoColor=white)

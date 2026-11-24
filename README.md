@@ -4,7 +4,7 @@ Mini Project Assignment 10.11.26
 
 <div align="center">
 
-<img src="https://readme-typing-svg.demolab.com?font=Space+Grotesk&weight=600&size=30&pause=1200&color=38BDF8&center=true&vCenter=true&width=920&height=70&lines=EXPLAINABLE+LOAN+APPROVAL;Decision+Trees+%7C+Feature+Selection+%7C+Explainable+ML" alt="Explainable Loan Approval" />
+<img src="https://readme-typing-svg.demolab.com?font=Space+Grotesk&weight=600&size=30&pause=1200&color=38BDF8&center=true&vCenter=true&width=920&height=70&lines=EXPLAINABLE+LOAN+APPROVAL;SHAP+%7C+LIME+%7C+Feature+Importance" alt="Explainable Loan Approval" />
 
 **A loan approval classifier**
 
@@ -13,7 +13,7 @@ Mini Project Assignment 10.11.26
 ![No Deep Learning](https://img.shields.io/badge/deep%20learning-none-22C55E)
 ![Status](https://img.shields.io/badge/status-complete-38BDF8)
 
-[Project page](https://YOUR-USERNAME.github.io/loan-approval-explainable-ai/) · [Notebook](notebooks/loan_approval.ipynb) · [Results](results/) · [Quick start](#quick-start)
+[Notebook](Loan_Approval%20ai%20.ipynb) · [Results](#model-results) · [Quick start](#quick-start)
 
 </div>
 
@@ -23,92 +23,103 @@ Mini Project Assignment 10.11.26
 
 | Dataset | Algorithms | Best rejection recall | Explainability |
 |:---:|:---:|:---:|:---:|
-| 614 applicants | 5 models + 3 feature-selection methods | `X.XX` | Tree rules + feature importance |
-
-> Replace the `X.XX` values with your final numbers after running the notebook.
+| 614 applicants | 4 models | `0.53` | Tree rules + SHAP + LIME |
 
 ---
 
 ## Problem
 
-Banks must decide whether to approve a loan. Manual review is slow, and customers and regulators expect a reason for each decision. This project predicts loan approval, compares feature subsets and algorithms, and explains each outcome with interpretable rules. It is a mini project, not a complete system workflow for the banking sector.
+Banks must decide whether to approve a loan. Manual review is slow, and customers and regulators expect a reason for each decision. This project predicts loan approval, compares four classical algorithms, and explains each outcome with SHAP, LIME and interpretable tree rules. It is a mini project, not a complete system workflow for the banking sector.
 
 ## Pipeline
 
 ```mermaid
 flowchart LR
-    A["Raw loan data"] --> B["Preprocess"]
-    B --> C["Feature engineering"]
-    C --> D["Feature selection"]
-    D --> E["Models + 5-fold CV"]
-    E --> F["Tree rules and importance"]
-    F --> G["predict.py"]
+    A["Raw loan data (614)"] --> B["Preprocess + impute"]
+    B --> C["Encode categories"]
+    C --> D["80/20 stratified split"]
+    D --> E["4 models"]
+    E --> F["Accuracy / Precision / Recall / F1"]
+    F --> G["SHAP + LIME"]
+    G --> H["prototype: decision + reasons"]
 ```
 
-## Feature selection comparison
+## Explainability comparison
 
-| Method | Type | Syllabus module | Selected features | Recall | F1 |
-|---|---|:---:|:---:|:---:|:---:|
-| Full set (baseline) | none | — | all | `X.XX` | `X.XX` |
-| Mutual information | Filter | 2 | `N` | `X.XX` | `X.XX` |
-| RFE + Decision Tree | Wrapper | 2 | `N` | `X.XX` | `X.XX` |
-| L1 (LASSO) logistic | Embedded | 3 | `N` | `X.XX` | `X.XX` |
+| Method | Type | Scope | What it showed |
+|---|---|:---:|---|
+| Decision tree plot | White-box | whole model | readable if/else rules, depth 4 |
+| SHAP (TreeExplainer) | Additive feature attribution | global + single applicant | `Credit_History` dominates (avg impact 0.152 vs 0.028 for the next feature) |
+| LIME | Local surrogate | single applicant | agreed with SHAP on the same applicant |
+
+> All 11 features were kept in the final model. A feature-selection comparison (mutual information / RFE / L1) was not part of this run, so the table above compares the three explanation methods instead.
 
 ## Model results
 
 | Model | Accuracy | Precision | Recall | F1 | ROC-AUC |
 |---|:---:|:---:|:---:|:---:|:---:|
-| KNN | `X.XX` | `X.XX` | `X.XX` | `X.XX` | `X.XX` |
-| Naïve Bayes | `X.XX` | `X.XX` | `X.XX` | `X.XX` | `X.XX` |
-| SVM | `X.XX` | `X.XX` | `X.XX` | `X.XX` | `X.XX` |
-| Decision Tree | `X.XX` | `X.XX` | `X.XX` | `X.XX` | `X.XX` |
-| Bagging / AdaBoost | `X.XX` | `X.XX` | `X.XX` | `X.XX` | `X.XX` |
+| Logistic Regression | `0.8618` | `0.8400` | `0.9882` | `0.9081` | `0.8019` |
+| SVM (RBF) | `0.8537` | `0.8317` | `0.9882` | `0.9032` | `0.7954` |
+| Random Forest | `0.8455` | `0.8235` | `0.9882` | `0.8984` | `0.7941` |
+| Decision Tree | `0.8455` | `0.8235` | `0.9882` | `0.8984` | `0.7060` |
 
-> Accuracy alone is misleading here because about 69% of applications are approved. Recall on rejections is the key metric.
+Evaluated on 123 held-out applicants (80/20 stratified split, `random_state=42`).
+
+> Accuracy alone is misleading here because about 69% of applications are approved. Recall on rejections is the key metric, and it is only **0.53** for every model - the class imbalance makes the models cautious about rejecting. The Random Forest is the model that gets explained, not the one with the best accuracy.
 
 ## Why was this applicant rejected?
 
-Each decision follows a path through the tree. Example format (replace with your output):
+Each SHAP value is the push that one feature gave to that one decision. Real output for a test applicant:
 
 ```text
-Credit_History <= 0.5        → Rejected
-  └─ LoanToIncome > 0.42     → Rejected
-Reasons: no credit history; loan is large relative to income
+new application - customer 2
+income    : 2500 | loan amount: 250
+credit his: 0.0 | area code  : 0
+
+DECISION   : REJECTED        confidence : 68.68 %
+
+Credit_History     = 0.0      -> REJECTION  -0.361
+ApplicantIncome    = 2500.0   -> APPROVAL   +0.044
+Dependents         = 2.0      -> APPROVAL   +0.032
 ```
+
+Reasons: no credit history; the application is otherwise fine but credit history alone outweighs everything else.
 
 ## Quick start
 
 ```bash
-git clone https://github.com/YOUR-USERNAME/loan-approval-explainable-ai.git
+git clone https://github.com/le-mort-adhyan/loan-approval-explainable-ai.git
 cd loan-approval-explainable-ai
-pip install -r requirements.txt
-python src/train.py          # trains models, saves results/
-python src/predict.py        # interactive single-applicant prediction
+pip install pandas numpy matplotlib seaborn scikit-learn shap lime
+jupyter notebook "Loan_Approval ai .ipynb"     # run all cells
 ```
 
 ## Project structure
 
 ```text
 loan-approval-explainable-ai/
-├── index.html          # project page (GitHub Pages)
+├── .github/workflows
+├── 2410.08886v1.pdf
+├── LICENSE
+├── Loan_Approval ai .ipynb
 ├── README.md
-├── data/               # train.csv or download instructions and all other csv files 
-├── notebooks/loan_approval.ipynb
-├── src/
-│   ├── preprocess.py
-│   ├── train.py
-│   └── predict.py
-├── results/            # plots and comparison table
-└── requirements.txt
+├── molab.py
+├── sample_submission.csv
+├── sheikh2020.pdf
+├── test.csv
+├── test_Y3wMUE5_7gLdaTN.csv
+├── train (1).csv
+└── train.csv
 ```
 
 ## Dataset
 
-[Loan Prediction Problem Dataset (Kaggle)](https://www.kaggle.com/datasets/altruistdelhite04/loan-prediction-problem-dataset). Download `train.csv` and place it in `data/`. Check the link before submission.
+[Loan Prediction Problem Dataset (Kaggle)](https://www.kaggle.com/datasets/altruistdelhite04/loan-prediction-problem-dataset). `train.csv` (614 rows, target `Loan_Status`) and `test.csv` (367 rows) are in the repository root; `test_Y3wMUE5_7gLdaTN.csv` and `train (1).csv` are the original named copies of the same files.
 
 ## Limitations
 
-- Small dataset (about 614 rows), so results vary between runs. Cross-validation is used to reduce this.
+- Small dataset (614 rows), so results vary between runs. A single 80/20 hold-out split is used, so numbers move a little with the seed.
+- Class imbalance (69% approved) keeps rejection recall low (0.53). Class weights or SMOTE would be the next step.
 - Historical approvals may contain bias. A model trained on them can repeat it.
 - This is a student project, not a production credit system.
 

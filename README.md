@@ -1,6 +1,8 @@
 # loan-approval-explainable-ai
 
-Mini Project Assignment 10.11.26
+Mini Project Assignment  SD:-10.11.26  ED:-25.11.26
+FOR Course :- Introduction to Machine Learning  
+Course Code:-PCCAIML 502
 
 <div align="center">
 
